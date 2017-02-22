@@ -1,0 +1,16 @@
+﻿Build started 2017/2/21 星期二 23:40:10.
+     1>Project "E:\Microsoft Visual Studio 12.0\Projects\CS 3113\HW02\NYUCodebase\NYUCodebase.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         E:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\SDL2\include /IC:\SDL2_image\include /IC:\glew\include /IC:\SDL2_mixer\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _WINDOWS /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>e:\microsoft visual studio 12.0\projects\cs 3113\hw02\nyucodebase\main.cpp(72): warning C4305: 'argument' : truncation from 'double' to 'float'
+       Link:
+         E:\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Microsoft Visual Studio 12.0\Projects\CS 3113\HW02\Debug\NYUCodebase.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\SDL2_mixer\lib\x86 /LIBPATH:C:\SDL2\lib\x86 /LIBPATH:C:\SDL2_image\lib\x86 /LIBPATH:C:\glew\lib\Release\Win32 SDL2.lib SDL2_mixer.lib glew32.lib SDL2main.lib SDL2_image.lib OpenGL32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Microsoft Visual Studio 12.0\Projects\CS 3113\HW02\Debug\NYUCodebase.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Microsoft Visual Studio 12.0\Projects\CS 3113\HW02\Debug\NYUCodebase.lib" /MACHINE:X86 Debug\Matrix.obj
+         Debug\ShaderProgram.obj
+         Debug\main.obj
+         NYUCodebase.vcxproj -> E:\Microsoft Visual Studio 12.0\Projects\CS 3113\HW02\Debug\NYUCodebase.exe
+     1>Done Building Project "E:\Microsoft Visual Studio 12.0\Projects\CS 3113\HW02\NYUCodebase\NYUCodebase.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.85
