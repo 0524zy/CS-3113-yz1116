@@ -110,7 +110,8 @@ int main(int argc, char *argv[]) {
 				paddleLeftM.Translate(0.0f, 0.05f, 0.0f);
 			}
 		}
-		if (keys[SDL_SCANCODE_S]) {
+
+		else if (keys[SDL_SCANCODE_S]) {
 			if (paddleLeft.bottom > -2.0f){
 				paddleLeft.top -= 0.05f;
 				paddleLeft.bottom -= 0.05f;
@@ -118,7 +119,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		if (keys[SDL_SCANCODE_UP]) {
+		else if (keys[SDL_SCANCODE_UP]) {
 			if (paddleRight.top < 2.0f){
 				paddleRight.top += 0.05f;
 				paddleRight.bottom += 0.05f;
@@ -126,7 +127,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		if (keys[SDL_SCANCODE_DOWN]) {
+		else if (keys[SDL_SCANCODE_DOWN]) {
 			if (paddleRight.bottom > -2.0f){
 				paddleRight.top -= 0.05f;
 				paddleRight.bottom -= 0.05f;
