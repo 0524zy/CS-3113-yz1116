@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
 		glDisableVertexAttribArray(program.positionAttribute);
 
 		if (start) {
-			if (ball.positionX - 0.1f < paddleLeft.right) {
+			if (ball.positionX + 0.1f < paddleLeft.right) {
 				start = false;
 				ballM.Translate(-ball.positionX, -ball.positionY, 0.0f);
 				ball.positionX = 0.0f;
@@ -169,7 +169,7 @@ int main(int argc, char *argv[]) {
 				ball.speed = 0.5f;
 			}
 
-			else if (ball.positionX + 0.1f > paddleRight.left) {
+			else if (ball.positionX - 0.1f > paddleRight.left) {
 				start = false;
 				ballM.Translate(-ball.positionX, -ball.positionY, 0.0f);
 				ball.positionX = 0.0f;
@@ -185,7 +185,9 @@ int main(int argc, char *argv[]) {
 				ballM.Translate(ball.speed * ball.directionX, ball.speed * ball.directionY, 0.0f);
 			}
 
-			else if ((ball.positionX + 0.1f >= paddleRight.left || ball.positionX - 0.1f <= paddleLeft.right)) {
+			else if ((ball.positionX >= paddleRight.left && ball.positionY >= paddleRight.bottom
+				&& ball.positionY <= paddleRight.top) || (ball.positionX <= paddleLeft.right
+				&& ball.positionY <= paddleLeft.top && ball.positionY >= paddleLeft.bottom)) {
 				ball.directionX *= -1;
 				ball.move();
 				ballM.Translate((ball.speed * ball.directionX), (ball.speed * ball.directionY), 0.0f);
