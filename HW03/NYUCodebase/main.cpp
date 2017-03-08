@@ -180,7 +180,6 @@ public:
 };
 
 void renderMainMenu() {
-	//draws text
 	modelMatrix.identity();
 	modelMatrix.Translate(-2.75f, 1.5f, 0.0f);
 	program->setModelMatrix(modelMatrix);
