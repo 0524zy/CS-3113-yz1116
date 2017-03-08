@@ -22,7 +22,7 @@ using namespace std;
 SDL_Window* displayWindow;
 GLuint fontTexture;
 GLuint spriteSheetTexture;
-GLuint titlePicture;
+GLuint backgroundTexture;
 Matrix projectionMatrix;
 Matrix viewMatrix;
 Matrix modelMatrix;
@@ -125,10 +125,10 @@ public:
 		speed[1] = dy;
 		entityMatrix.identity();
 		entityMatrix.Translate(x, y, 0);
-		boundaries[0] = y + 0.05f * size;
-		boundaries[1] = y - 0.05f * size;
-		boundaries[2] = x - 0.05f * size;
-		boundaries[3] = x + 0.05f * size;
+		boundaries[0] = y + 0.05f * size; // top
+		boundaries[1] = y - 0.05f * size; // bottom
+		boundaries[2] = x - 0.05f * size; // left
+		boundaries[3] = x + 0.05f * size; // right
 
 		u = spriteU;
 		v = spriteV;
@@ -189,7 +189,7 @@ void renderMainMenu() {
 	modelMatrix.identity();
 	modelMatrix.Translate(-2.25f, -0.1f, 0.0f);
 	program->setModelMatrix(modelMatrix);
-	drawText(program, fontTexture, "Press Space to Start", 0.23f, 0.0001f);
+	drawText(program, fontTexture, "Press Enter to Start", 0.23f, 0.0001f);
 
 	modelMatrix.identity();
 	modelMatrix.Translate(-2.0f, -1.2f, 0.0f);
@@ -226,6 +226,14 @@ void renderGameLevel() {
 }
 
 void updateGameLevel(float elapsed) {
+	if (player.boundaries[2] <= -4.0f) {
+		moveLeft = false;
+	}
+
+	if (player.boundaries[3] >= 4.0f) {
+		moveRight = false;
+	}
+
 	if (moveLeft) {
 		player.position[0] -= player.speed[0] * elapsed;
 		player.boundaries[2] -= player.speed[0] * elapsed;
@@ -238,9 +246,9 @@ void updateGameLevel(float elapsed) {
 	}
 
 	if (fireBullet) {
-		if (timeSinceLastFire > 0.5f) {
+		if (timeSinceLastFire > 0.2f) {
 			timeSinceLastFire = 0;
-			playerBullets.push_back(Entity(player.position[0], player.position[1], 827.0f / 1024.0f, 125.0f / 1024.0f, 16.0f / 1024.0f, 40.0f
+			playerBullets.push_back(Entity(player.position[0], player.position[1], 829.0f / 1024.0f, 471.0f / 1024.0f, 14.0f / 1024.0f, 31.0f
 				/ 1024.0f, 0, 4.0f));
 		}
 	}
@@ -310,8 +318,9 @@ void updateGameLevel(float elapsed) {
 		}
 	}
 
-	if (enemies.size() == 0)
+	if (enemies.size() == 0) {
 		gameRunning = false;
+	}
 }
 
 void Render() {
@@ -375,20 +384,19 @@ int main(int argc, char *argv[])
 
 			switch (event.type) {
 			case SDL_KEYDOWN:
-				if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-					if (state == STATE_MAIN_MENU) {
-						state = STATE_GAME_LEVEL;
-					}
-					else {
-						fireBullet = true;
-					}
+				if (event.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+					state = STATE_GAME_LEVEL;
 				}
 
-				if (event.key.keysym.scancode == SDL_SCANCODE_LEFT && player.boundaries[2] > -3.5f) {
+				if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
+					fireBullet = true;
+				}
+
+				if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
 					moveLeft = true;
 				}
 
-				else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT && player.boundaries[3] < 3.5f) {
+				else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
 					moveRight = true;
 				}
 				break;
