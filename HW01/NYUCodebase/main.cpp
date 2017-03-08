@@ -52,39 +52,26 @@ int main(int argc, char *argv[])
 
 	glViewport(0, 0, 640, 360);
 
-	ShaderProgram program(RESOURCE_FOLDER"vertex.glsl", RESOURCE_FOLDER"fragment.glsl");
+	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 
 	GLuint text1 = LoadTexture(RESOURCE_FOLDER"a.png");
 	GLuint text2 = LoadTexture(RESOURCE_FOLDER"b.png");
 	GLuint text3 = LoadTexture(RESOURCE_FOLDER"c.png");
+
+	float lastFrameTicks = 0.0f;
 
 	float text1Pos = 0.0f;
 	float text2Pos = 0.0f;
 	float angle = 0.0f;
 
 	Matrix projectionMatrix;
-	//Matrix projectionMatrix1, projectionMatrix2, projectionMatrix3;
 	Matrix modelMatrix;
-	//Matrix modelMatrix1, modelMatrix2, modelMatrix3;
-
 	Matrix viewMatrix;
-	//Matrix viewMatrix1, viewMatrix2, viewMatrix3;
 
 	projectionMatrix.setOrthoProjection(-5.33, 5.33, -3.0f, 3.0f, -1.0f, 1.0f);
-	/*projectionMatrix1.setOrthoProjection(-5.33, 5.33, -3.0f, 3.0f, -1.0f, 1.0f);
-	projectionMatrix2.setOrthoProjection(-5.33, 5.33, -3.0f, 3.0f, -1.0f, 1.0f);
-	projectionMatrix3.setOrthoProjection(-5.33, 5.33, -3.0f, 3.0f, -1.0f, 1.0f);*/
-
-	//glUseProgram(program.programID);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	float lastFrameTicks = 0.0f;
-
-	//modelMatrix.identity();
-	//modelMatrix.Translate(1.0, 0.0, 0.0);
-	//modelMatrix.Rotate(45.0 * (3.1415926 / 180.0));
 
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -102,6 +89,12 @@ int main(int argc, char *argv[])
 
 		glUseProgram(program.programID);
 
+		float ticks = (float)SDL_GetTicks() / 1000.0f;
+		float elapsed = ticks - lastFrameTicks;
+		lastFrameTicks = ticks;
+
+		angle += elapsed;
+
 		modelMatrix.identity();
 		modelMatrix.Rotate(angle);
 
@@ -115,6 +108,7 @@ int main(int argc, char *argv[])
 		float texCoords1[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 		glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords1);
 		glEnableVertexAttribArray(program.texCoordAttribute);
+		glBindTexture(GL_TEXTURE_2D, text1);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glDisableVertexAttribArray(program.positionAttribute);
 		glDisableVertexAttribArray(program.texCoordAttribute);
@@ -129,6 +123,7 @@ int main(int argc, char *argv[])
 		float texCoords2[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 		glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords2);
 		glEnableVertexAttribArray(program.texCoordAttribute);
+		glBindTexture(GL_TEXTURE_2D, text2);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glDisableVertexAttribArray(program.positionAttribute);
 		glDisableVertexAttribArray(program.texCoordAttribute);
@@ -143,18 +138,10 @@ int main(int argc, char *argv[])
 		float texCoords3[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 		glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords3);
 		glEnableVertexAttribArray(program.texCoordAttribute);
+		glBindTexture(GL_TEXTURE_2D, text3);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glDisableVertexAttribArray(program.positionAttribute);
 		glDisableVertexAttribArray(program.texCoordAttribute);
-
-		float ticks = (float)SDL_GetTicks() / 1000.0f;
-		float elapsed = ticks - lastFrameTicks;
-		lastFrameTicks = ticks;
-
-		angle += (45.0 * (3.1415926 / 180.0));
-
-		text1Pos += elapsed;
-		text2Pos += elapsed;
 
 		SDL_GL_SwapWindow(displayWindow);
 	}
